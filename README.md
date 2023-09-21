@@ -1,8 +1,9 @@
 
 
-![](assets/eye_catch.png)
+![](https://raw.githubusercontent.com/yKesamaru/chrome_driver/master/assets/eye_catch.png)
 
 - [はじめに](#はじめに)
+- [環境](#環境)
 - [問題の発生](#問題の発生)
 - [エラーメッセージ](#エラーメッセージ)
 - [解決手順](#解決手順)
@@ -12,6 +13,13 @@
 この記事は、ChromeのバージョンアップによってSeleniumで発生する一般的なエラーとその解決手順について解説するものです。
 
 この記事は主に自分用の備忘録として書かれており、今後同様の問題に遭遇した際にすぐに対処できるようにすることを目的としています。
+
+## 環境
+```bash
+$ uname -a
+Linux user 5.15.0-83-generic #92~20.04.1-Ubuntu SMP Mon Aug 21 14:00:49 UTC 2023 x86_64 x86_64 x86_64 GNU/Linux
+
+```
 
 ## 問題の発生
 - セキュリティアップデート後にChromeがバージョンアップし、Seleniumで使用している`chromedriver`が古いバージョンであるためにエラーが発生。
@@ -25,16 +33,17 @@
 
 1. **Chromeのバージョン確認**
     - 使用しているChromeのバージョンを確認。このケースでは、バージョン117.0.5938.88。
-    - ![](assets/2023-09-21-19-40-25.png)
+        ![](https://raw.githubusercontent.com/yKesamaru/chrome_driver/master/assets/2023-09-21-19-40-25.png)
 
-2. **適切な`chromedriver`のダウンロード**
+1. **適切な`chromedriver`のダウンロード**
     - Chromeのバージョンに合った`chromedriver`を[Chrome for Testing availability dashboard](https://googlechromelabs.github.io/chrome-for-testing/)からダウンロード。
-    - ![](assets/2023-09-21-19-43-13.png)
 
-3. **`chromedriver`の配置**
+        ![](https://raw.githubusercontent.com/yKesamaru/chrome_driver/master/assets/2023-09-21-19-43-13.png)
+
+2. **`chromedriver`の配置**
     - ダウンロードした`chromedriver`をプロジェクトのディレクトリに配置。
 
-4. **Pythonコードの修正**
+3. **Pythonコードの修正**
     - Pythonスクリプト内で`webdriver.Chrome`を呼び出す際のパスを、新しくダウンロードした`chromedriver`のパスに修正。
    - 修正前
      ```python
@@ -50,7 +59,7 @@
          options=options
          )
      ```
-5. **実行権限の確認**
+4. **実行権限の確認**
     - `chmod +x /path/to/chromedriver`コマンドで`chromedriver`に実行権限を付与。
       ```bash
         drwxrwxr-x  2 user user     4096  9月 21 18:31 ./
@@ -58,7 +67,7 @@
         -rw-r--r--  1 user user   250924  9月 15 07:52 LICENSE.chromedriver
         -rwxr-xr-x  1 user user 14078720  9月 15 07:52 chromedriver*
       ```
-6. **スクリプトの再実行**
+5. **スクリプトの再実行**
     - Pythonスクリプトを再実行して、エラーが解消されるか確認。
 
 ## まとめ
